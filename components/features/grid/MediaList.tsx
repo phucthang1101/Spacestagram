@@ -14,7 +14,7 @@ const MediaList = () => {
 
     //console.log({ products })
     useEffect(() => {
-        console.log("media list useeffect: ", cardsLoaded)
+        //console.log("media list useeffect: ", cardsLoaded)
         if (!cardsLoaded) {
             dispatch(fetchCardsAsync());
         }
@@ -26,7 +26,7 @@ const MediaList = () => {
             <Grid
                 item
                 xs={12}
-                sm={6}
+                sm={12}
                 key={spaceCard.id}
                 style={{ display: 'flex' }}
             >
@@ -37,7 +37,7 @@ const MediaList = () => {
 
     return (
         <>
-            <Container maxWidth="md">
+            <Container maxWidth="lg">
                 <Grid container spacing={4}>
                     {renderProducts()}
                 </Grid>

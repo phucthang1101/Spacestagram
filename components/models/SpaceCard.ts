@@ -1,7 +1,8 @@
 export interface SpaceCard {
     id: number;
+    copyright?:string;
     url: string;
-    hdurl: string;
+    hdurl?: string;
     title: string;
     explanation: string;
     date: string;

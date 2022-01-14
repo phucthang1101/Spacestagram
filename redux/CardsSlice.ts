@@ -13,16 +13,22 @@ interface CardsState {
 
 const cardsAdapter = createEntityAdapter<SpaceCard>();
 
+const getPreviousMonthDate = () => {
+    let today = new Date();
+    let priorDate = new Date().setDate(today.getDate() - 30);
+    return new Date(priorDate).toISOString().split('T')[0];
+};
+
 export const fetchCardsAsync = createAsyncThunk<SpaceCard[], void, { state: RootState }>(
     'cards/fetchCardsAsync',
     async (_, thunkAPI: any) => {
         try {
-            const response = await fetch(`${API_URL}&count=15`);
+            const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate()}`);
             console.log(response);
             const apiCards = await response.json();
             // since cards from API do not have id field so we should init it.
             let id = 1;
-            apiCards.map((card: SpaceCard) => card.id = id++)
+            apiCards.map((card: SpaceCard) => {card.id = id++; card.liked = false})
             return apiCards;
         }
         catch (error: any) {
