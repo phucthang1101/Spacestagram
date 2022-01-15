@@ -29,10 +29,10 @@ span.s2 {
   height: 75vh;
   width: 75vw;
   margin: 100px auto;
-  background-color: #fff;
-  -webkit-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
+  /* background-color: #fff; */
+  -webkit-box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
+  -moz-box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
+  box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
 }
 
 /* Image on the left side */
@@ -43,9 +43,9 @@ span.s2 {
   top: -30px;
   height: 320px;
   width: 530px;
-  -webkit-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 5px -1px 25px 0px rgb(255 255 255 / 66%);
+  -moz-box-shadow: 5px -1px 25px 0px rgb(255 255 255 / 66%);
+  box-shadow: 5px -1px 25px 0px rgb(255 255 255 / 66%);
   overflow: hidden;
 }
 
@@ -71,7 +71,7 @@ span.s2 {
 .space_card_title {
   padding-top: 15px;
   font-size: 1.3rem;
-  color: #4b4b4b;
+  color: #d39f69;
 }
 
 .space_card_author {
@@ -105,7 +105,7 @@ span.s2 {
   padding-top: 10px;
   font-size: 0.95rem;
   line-height: 150%;
-  color: #4b4b4b;
+  color: #f2f2f2;
 }
 
 /* DATE of release*/

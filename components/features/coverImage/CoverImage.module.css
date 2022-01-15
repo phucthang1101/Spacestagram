@@ -1,0 +1,148 @@
+@media only screen and (min-width: 576px) {
+  .cover_img {
+    height: 70vh;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .cover_img {
+    height: 100vh;
+  }
+}
+.cover_img {
+  height: 100vh;
+  position: relative;
+  z-index: 0;
+  /* background: linear-gradient(
+90deg
+, rgba(1,11,25,1) 0%, rgba(2,22,49,1) 24%, rgba(3,33,74,1) 35%, rgba(81,116,162,1) 64%, rgba(5,55,123,1) 95%, rgba(5,55,123,1) 97%);*/
+}
+.cover_img :global #particles {
+  height: 60%;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+}
+.cover_img :global canvas {
+  width: 100%;
+  height: 100%;
+}
+.cover_img_section {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background: url(https://www.kcrw.com/news/shows/press-play-with-madeleine-brand/politics-immigration-alzheimers-film-travel/space-tourism/@@images/rectangular_image/page-header?v=1623277449.28);
+  background-size: initial;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.image_wrapper,
+.astronaut_img {
+  width: 100px;
+  height: 100px;
+}
+.image_wrapper {
+  animation: img_wrapper 13s linear infinite alternate;
+}
+
+.astronaut_img {
+    animation: ast_img 7s linear infinite alternate;
+  }
+/* }
+.astronaut_img {
+  animation: ast_img 7s linear infinite alternate, spin 4s linear infinite;
+} */
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes img_wrapper {
+  100% {
+    transform: translateX(calc(80vw - 100px));
+  }
+}
+
+@keyframes ast_img {
+  100% {
+    transform: translateY(calc(100vh - 100px))  rotate(360deg);
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .cover_img_container {
+    max-width: 540px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .cover_img_container {
+    max-width: 720px;
+  }
+}
+
+.cover_img_container {
+  width: 100%;
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1140px;
+}
+
+.cover_img_text {
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  transform: translate(-60%, -50%);
+  color: white;
+}
+.cover_img_title {
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  font-size: calc(1.7rem + 4.5vw);
+  font-weight: 300;
+  color: white;
+}
+.smooth_scroll {
+  color: #000;
+  background-color: #fff;
+  padding: 0.8rem 0.85rem;
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+.cover_img_earth {
+  right: -25%;
+  top: 10%;
+  width: 100%;
+  filter: opacity(50%);
+  position: absolute;
+  z-index: -10;
+}
+
+@media only screen and (min-width: 768px) {
+  .cover_img_earth {
+    width: 60%;
+    right: 0;
+    top: 10%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .cover_img_earth {
+    width: 55%;
+    right: 5%;
+    top: 0;
+  }
+}
+
+@media only screen and (min-width: 1220px) {
+  .cover_img_earth {
+    width: 42%;
+  }
+}

@@ -37,8 +37,8 @@ const MediaList = () => {
 
     return (
         <>
-            <Container maxWidth="lg">
-                <Grid container spacing={4}>
+            <Container maxWidth="lg" className={styles.media_list_container}>
+                <Grid container spacing={4} className={styles.media_list_grid_container}>
                     {renderProducts()}
                 </Grid>
             </Container>

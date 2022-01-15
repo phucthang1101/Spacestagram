@@ -1,0 +1,11 @@
+@media (min-width:1200px){
+    .media_list_container{
+        width: 100vw;
+        padding: 0;
+    }
+}
+.media_list_grid_container{
+    margin-top: 0;
+    margin-left: 0;
+    width: 100%;
+}
