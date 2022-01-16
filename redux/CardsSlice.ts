@@ -7,28 +7,65 @@ const { publicRuntimeConfig } = getConfig();
 const API_URL = publicRuntimeConfig.API_URL;
 
 interface CardsState {
-    cardsLoaded: boolean,
+    cardsLoaded: boolean;
+    loadMore: boolean;
     status: string;
+    month: number;
 }
 
-const cardsAdapter = createEntityAdapter<SpaceCard>();
+const cardsAdapter = createEntityAdapter<SpaceCard>({
+    selectId: (spaceCard) => spaceCard.title
+});
 
-const getPreviousMonthDate = () => {
+const getPreviousMonthDate = (NoOfMonths: number) => {
     let today = new Date();
-    let priorDate = new Date().setDate(today.getDate() - 30);
+    let priorDate = new Date().setDate(today.getDate() - 30 * NoOfMonths);
     return new Date(priorDate).toISOString().split('T')[0];
 };
+
+// export const fetchCardsAsync = createAsyncThunk<SpaceCard[], void, { state: RootState }>(
+//     'cards/fetchCardsAsync',
+//     async (_, thunkAPI: any) => {
+//         try {
+//             const NoOfMonths = thunkAPI.getState().cards.month;
+//             if (NoOfMonths === 1) {
+//                 const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(1)}`);
+//                 console.log(response);
+//                 const apiCards = await response.json();
+//                 // since cards from API do not have id field so we should init it.
+//                 let id = thunkAPI.getState().cards.latestId;
+//                 apiCards.map((card: SpaceCard) => { card.id = id++; card.liked = false })
+//                 return apiCards;
+//             }
+//             else {
+//                 const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(NoOfMonths)}`);
+//                 console.log(response);
+//                 const apiCards = await response.json();
+//                 // since cards from API do not have id field so we should init it.
+
+//                 let id = thunkAPI.getState().cards.latestId;
+//                 apiCards.map((card: SpaceCard) => { card.id = id++; card.liked = false })
+//                 return apiCards;
+//             }
+
+//         }
+//         catch (error: any) {
+//             return thunkAPI.rejectWithValue({ error: error.data });
+//         }
+//     },
+// )
+
 
 export const fetchCardsAsync = createAsyncThunk<SpaceCard[], void, { state: RootState }>(
     'cards/fetchCardsAsync',
     async (_, thunkAPI: any) => {
         try {
-            const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate()}`);
-            console.log(response);
+            const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(1)}`);
+            console.log("fetchCardsAsync: ", response);
             const apiCards = await response.json();
             // since cards from API do not have id field so we should init it.
-            let id = 1;
-            apiCards.map((card: SpaceCard) => {card.id = id++; card.liked = false})
+            // let id = thunkAPI.getState().cards.latestId;
+            // apiCards.map((card: SpaceCard) => { card.id = id++; card.liked = false })
             return apiCards;
         }
         catch (error: any) {
@@ -37,13 +74,36 @@ export const fetchCardsAsync = createAsyncThunk<SpaceCard[], void, { state: Root
     },
 )
 
+
+export const fetchMoreCardsAsync = createAsyncThunk<SpaceCard[], void, { state: RootState }>(
+    'cards/fetchMoreCardsAsync',
+    async (_, thunkAPI: any) => {
+        try {
+            const NoOfMonths = thunkAPI.getState().cards.month;
+            const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(NoOfMonths)}`);
+            console.log("fetchMoreCardsAsync: ", NoOfMonths);
+            const apiCards = await response.json();
+
+            return apiCards;
+        }
+        catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.data });
+        }
+    },
+)
 export const CardsSlice = createSlice({
     name: 'cards',
     initialState: cardsAdapter.getInitialState<CardsState>({
         cardsLoaded: false,
-        status: 'idle'
+        loadMore: false,
+        status: 'idle',
+        month: 1
     }),
-    reducers: {},
+    reducers: {
+        resetLoadMore: (state) => {
+            state.loadMore = false;
+        },
+    },
     extraReducers: (builder => {
         builder.addCase(fetchCardsAsync.pending, state => {
             state.status = 'pendingFetchCards'
@@ -53,9 +113,25 @@ export const CardsSlice = createSlice({
             cardsAdapter.setAll(state, action.payload)
             state.status = 'pendingFetchCards'
             state.cardsLoaded = true;
+            state.month = state.month + 1;
         });
 
         builder.addCase(fetchCardsAsync.rejected, state => {
+            state.status = 'idle'
+        });
+
+        builder.addCase(fetchMoreCardsAsync.pending, state => {
+            state.status = 'pendingFetchMoreCards'
+        });
+        builder.addCase(fetchMoreCardsAsync.fulfilled, (state, action) => {
+            console.log('fetchMoreCardsAsync.fulfilled: ', action.payload)
+            cardsAdapter.addMany(state, action.payload)
+            state.status = 'pendingFetchMoreCards'
+            state.loadMore = true;
+            state.month = state.month + 1;
+        });
+
+        builder.addCase(fetchMoreCardsAsync.rejected, state => {
             state.status = 'idle'
         });
     })
@@ -68,4 +144,4 @@ export const selectCards = selectors.selectAll;
 
 export const cardSelectors = cardsAdapter.getSelectors((state: RootState) => state.cards);
 
-
+export const { resetLoadMore } = CardsSlice.actions;

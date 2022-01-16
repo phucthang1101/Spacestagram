@@ -7,6 +7,7 @@ import ParticlesCustom from './particles';
 const CoverImage = () => {
     return (
         <>
+        
             <section className={styles.cover_img}>
                 <ParticlesCustom />
                 <div className={styles.cover_img_section}>
@@ -34,7 +35,7 @@ const CoverImage = () => {
                                 sm={6}
                                 style={{ display: 'flex' }}
                             >
-                                <img className={styles.cover_img_earth} src="https://komeegbedi.github.io/spacestagram/assets/moon.png" alt="Hero Moon" />
+                                {/* <img className={styles.cover_img_earth} src="https://komeegbedi.github.io/spacestagram/assets/moon.png" alt="Hero Moon" /> */}
                             </Grid>
                         </Grid>
                     </Container>
@@ -47,6 +48,7 @@ const CoverImage = () => {
                     </div> */}
                 </div>
             </section>
+           
         </>
     )
 }

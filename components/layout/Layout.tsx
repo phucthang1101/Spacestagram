@@ -2,6 +2,7 @@ import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; import React, { useCallback, useEffect, useState } from 'react';
 import { fetchCardsAsync } from '../../redux/CardsSlice';
 import { useAppDispatch } from '../../redux/store';
+import LoadingScreen from '../features/loadingScreen/LoadingScreen';
 import Footer from './footer/Footer';
 import Header from './header/Header';
 
@@ -37,14 +38,17 @@ const Layout = (props: any) => {
     const handleThemeChange = () => {
         setDarkMode(!darkMode);
     }
-    if (loading) return <div>Initialising app...'</div>
+    if (loading) return <LoadingScreen />
+    //return  <LoadingScreen/>
     return (
         <>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <Header />
                 {props.children}
+
                 <Footer />
+
             </ThemeProvider>
 
         </>

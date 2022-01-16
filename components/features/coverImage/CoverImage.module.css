@@ -16,12 +16,24 @@
   /* background: linear-gradient(
 90deg
 , rgba(1,11,25,1) 0%, rgba(2,22,49,1) 24%, rgba(3,33,74,1) 35%, rgba(81,116,162,1) 64%, rgba(5,55,123,1) 95%, rgba(5,55,123,1) 97%);*/
+  animation: slideIn 0.75s;
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: rotateX(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
 }
 .cover_img :global #particles {
   height: 60%;
   opacity: 0.7;
   position: absolute;
   top: 0;
+  z-index: 100;
 }
 .cover_img :global canvas {
   width: 100%;
@@ -47,8 +59,8 @@
 }
 
 .astronaut_img {
-    animation: ast_img 7s linear infinite alternate;
-  }
+  animation: ast_img 7s linear infinite alternate;
+}
 /* }
 .astronaut_img {
   animation: ast_img 7s linear infinite alternate, spin 4s linear infinite;
@@ -67,7 +79,7 @@
 
 @keyframes ast_img {
   100% {
-    transform: translateY(calc(100vh - 100px))  rotate(360deg);
+    transform: translateY(calc(100vh - 100px)) rotate(360deg);
   }
 }
 

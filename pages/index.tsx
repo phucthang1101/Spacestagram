@@ -5,11 +5,12 @@ import CoverImage from '../components/features/coverImage/CoverImage'
 import MediaList from '../components/features/grid/MediaList'
 import Layout from '../components/layout/Layout'
 
-
 const Home: NextPage = () => {
   return (
     <Layout>
-      <CoverImage/>
+     
+        <CoverImage />
+     
       <MediaList />
     </Layout>
   )
