@@ -1,6 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import CoverImage from '../components/features/coverImage/CoverImage'
 import MediaList from '../components/features/grid/MediaList'
@@ -31,8 +29,8 @@ const Home: NextPage = () => {
 
   if (loading) return <LoadingScreen />
   return (
-    <Layout>
-      <CoverImage />
+    <Layout title="Spacestagram">
+      <CoverImage slogan="To Intern-ity <br/> and Beyond!"/>
       <MediaList spaceCardsProps={spaceCards} />
     </Layout>
 

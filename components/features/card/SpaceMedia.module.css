@@ -29,7 +29,6 @@ span.s2 {
   height: 75vh;
   width: 75vw;
   margin: 100px auto;
-  /* background-color: #fff; */
   -webkit-box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
   -moz-box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
   box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
@@ -49,8 +48,6 @@ span.s2 {
   overflow: hidden;
 }
 
-/*object-fit: cover;*/
-/*object-position: center;*/
 .space_card_img_left {
   position: absolute;
   left: 50%;
@@ -61,7 +58,16 @@ span.s2 {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-
+.space_card_vid_left {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 /* Right side of the card */
 .space_card_right {
   margin: 0 auto;
@@ -104,6 +110,7 @@ span.s2 {
   font-size: 0.95rem;
   line-height: 150%;
   color: #f2f2f2;
+  margin-top: 0;
 }
 
 /* DATE of release*/
@@ -562,5 +569,22 @@ span.s2 {
 
   .share_btn_input:checked ~ .share_btn_options {
     white-space: unset;
+  }
+}
+
+@media (min-width: 1440px) {
+  /* The card */
+  .space_card {
+    position: relative;
+    height: 80%;
+    width: 75%;
+    margin: 15% auto 10%;
+  }
+
+  /* Image on the left side */
+  .space_card_thumbnail {
+    height: 75%;
+    left: 40px;
+    top: -35px;
   }
 }

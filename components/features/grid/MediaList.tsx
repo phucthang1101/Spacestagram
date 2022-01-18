@@ -18,9 +18,8 @@ const MediaList = ({ spaceCardsProps }: Props) => {
 
 
     const trackScrolling = useCallback(() => {
-        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 300 && !loadMore) {
+        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight / 2 && !loadMore) {
             // remove event listener to make sure it only runs once
-            //console.log('ready to fetch more');
             dispatch(fetchMoreCardsAsync())
             document.removeEventListener('scroll', trackScrolling)
         }
@@ -54,11 +53,11 @@ const MediaList = ({ spaceCardsProps }: Props) => {
         ))
     }
 
- 
+
     // function to allow for pagination
     return (
         <>
-            <Container maxWidth="lg" className={styles.media_list_container}>
+            <Container maxWidth="lg" className={styles.media_list_container} id="gallery-post">
                 <Grid container spacing={4} className={styles.media_list_grid_container}>
                     {renderSpaceCards()}
                 </Grid>

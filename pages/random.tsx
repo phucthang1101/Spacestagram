@@ -1,6 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import CoverImage from '../components/features/coverImage/CoverImage'
 import MediaList from '../components/features/grid/MediaList'
@@ -34,8 +32,8 @@ const Random: NextPage = () => {
     if (loading) return <LoadingScreen />
 
     return (
-        <Layout>
-            <CoverImage />
+        <Layout title="Spacestagram | Moments">
+            <CoverImage slogan="Moments <br/> of <br/> the Universe"/>
             <MediaList spaceCardsProps={spaceCards} />
         </Layout>
 

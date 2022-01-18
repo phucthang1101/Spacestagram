@@ -1,9 +1,4 @@
-@media (min-width: 1200px) {
-  .media_list_container {
-    width: 100vw;
-    padding: 0;
-  }
-}
+
 .media_list_grid_container {
   margin-top: 0;
   margin-left: 0;
@@ -12,5 +7,15 @@
 @media only screen and (max-width: 768px) {
   .space_card_wrapper {
     padding: 0;
+  }
+}
+@media (min-width: 1440px) {
+  .media_list_container {
+    max-width: 90vw;
+    padding: 0;
+  }
+  .space_card_wrapper {
+    padding: 0;
+    height: 90vh;
   }
 }

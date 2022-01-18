@@ -13,9 +13,6 @@
   height: 100vh;
   position: relative;
   z-index: 0;
-  /* background: linear-gradient(
-90deg
-, rgba(1,11,25,1) 0%, rgba(2,22,49,1) 24%, rgba(3,33,74,1) 35%, rgba(81,116,162,1) 64%, rgba(5,55,123,1) 95%, rgba(5,55,123,1) 97%);*/
   animation: slideIn 0.75s;
 }
 @keyframes slideIn {
@@ -45,7 +42,7 @@
   width: 98vw;
   position: relative;
   background: url(/static/images/earth_outer_space.jpg);
-  background-size: initial;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -69,7 +66,7 @@
 }
 @keyframes img_wrapper {
   100% {
-    transform: translateX(calc(80vw - 100px));
+    transform: translateX(calc(98vw - 100px));
   }
 }
 
@@ -101,18 +98,41 @@
 
 .cover_img_text {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 30%;
   transform: translate(-60%, -50%);
   color: white;
+  z-index: 9999;
 }
 .cover_img_title {
+  margin-bottom: 30px;
+}
+.cover_img_title h2 {
   letter-spacing: 0.1em;
   line-height: 1.5;
-  margin-bottom: 30px;
-  font-size: calc(1.7rem + 4.5vw);
+  font-size: calc(1rem + 4.5vw);
   font-weight: 300;
   color: white;
+  display: inline;
+  margin: 0;
+}
+.cover_img_title span {
+  font-size: calc(0.8rem + 4.5vw);
+  font-weight: 300;
+  color: white;
+  display: inline;
+  animation: blink 1s linear infinite;
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .smooth_scroll {
   color: #000;
@@ -162,7 +182,24 @@
     color: white;
     transform: none;
   }
-  .cover_img_section{
-    width:105vw;
+  .cover_img_section {
+    width: 105vw;
+  }
+}
+@media (min-width: 1440px) {
+  .cover_img_title {
+    margin-bottom: 50px;
+  }
+ 
+ 
+  .smooth_scroll {
+    padding: 0.8rem 0.85rem;
+    border-radius: 15px;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+    font-size: 1.9em;
+  }
+  .smooth_scroll i{
+    margin-left: 5px;
   }
 }

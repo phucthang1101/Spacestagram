@@ -4,15 +4,14 @@ import Button from '@mui/material/Button';
 import { SpaceCard } from '../../models/SpaceCard';
 import { Grid } from '@mui/material';
 import SpaceModal from '../modal/SpaceModal';
+import { generateClones, trimTextBaseOnScreenSize } from '../../../utils/helper';
 
 interface Props {
     spaceCard: SpaceCard
 }
-const MAX_LENGTH = 350;
 
 const SpaceMedia = ({ spaceCard }: Props) => {
     const [likeBtnActive, setLikeBtnActive] = useState([false, false]);
-    //const [clapBtnActive, setClapBtnActive] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
 
     // modal
@@ -35,18 +34,6 @@ const SpaceMedia = ({ spaceCard }: Props) => {
     }, [])
 
 
-    //re-trim if we are in the middle of a word
-    const renderExplanation = () => {
-        let trimmedString = spaceCard.explanation.substring(0, MAX_LENGTH);
-
-        trimmedString = trimmedString.substring(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")));
-
-        return (
-            <p className={styles.space_card_explanation}>
-                {trimmedString}...
-            </p>
-        )
-    }
 
     const copyLinkToClipboard = () => {
         navigator.clipboard
@@ -107,69 +94,37 @@ const SpaceMedia = ({ spaceCard }: Props) => {
                 }
                 saveCardsToLS({ ...cards })
             }
+            let button = likeBtnRef.current!;
+            setAnimation(true);
+            generateClones(button);
+
 
             setLikeBtnActive([!likeBtnActive[0], likeBtnActive[1]]);
-
-            //let button = document.querySelector(`.${styles.like_btn_new}`)!;
-            let button = likeBtnRef.current!;
-            //button.className.concat(` ${styles.like_btn_new_animated}`);
-            //button.classList.add(`${styles.animated}`);
-            //console.log('before className: ', button.classList);
-            setAnimation(true);
-
-            let clones = 5;
-
-            for (let it = 1; it <= clones; it++) {
-                let clone = button.querySelector("svg")!.cloneNode(true), size = randomInt(20, 36).toString();
-                //size = randomInt(5, 16).toString();
-
-                button.appendChild(clone);
-                (clone as HTMLElement).setAttribute("width", size);
-                (clone as HTMLElement).setAttribute("height", size);
-                (clone as HTMLElement).style.position = "absolute";
-                (clone as HTMLElement).style.transition =
-                    "transform 0.5s cubic-bezier(0.12, 0.74, 0.58, 0.99) 0.3s, opacity 1s ease-out .5s";
-
-                let animTimeout = setTimeout(function () {
-                    clearTimeout(animTimeout);
-                    (clone as HTMLElement).style.transform =
-                        "translate3d(" +
-                        (plusOrMinus() * randomInt(25, 50)) +
-                        "px," +
-                        (plusOrMinus() * randomInt(25, 50)) +
-                        "px,0)";
-                    (clone as HTMLElement).style.opacity = '0';
-                }, 1);
-
-
-                let removeNodeTimeout = setTimeout(function () {
-                    console.log('button: ', button.children[it - 1]);
-                    it - 1 != 0 && button.children[it - 1] && button.removeChild(button.children[it - 1]);
-
-                    clearTimeout(removeNodeTimeout);
-                }, 2000);
-
-            }
             setTimeout(() => setAnimation(false), 600);
         }
 
     }
 
 
-    function plusOrMinus() {
-        return Math.random() < 0.5 ? -1 : 1;
-    }
-
-    function randomInt(min: number, max: number) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    }
-
     return (
         <>
             <div className={styles.fond}>
                 <Grid container className={styles.space_card}>
                     <Grid item xs={12} md={6} className={styles.space_card_thumbnail}>
-                        <img className={styles.space_card_img_left} src={spaceCard.hdurl ? spaceCard.hdurl : spaceCard.url} />
+                        {spaceCard.media_type === 'image' ?
+                            (
+                                <img
+                                    className={styles.space_card_img_left}
+                                    src={spaceCard.hdurl ? spaceCard.hdurl : spaceCard.url}
+                                    alt={spaceCard.title} />
+                            ) : (
+                                <iframe
+                                    className={styles.space_card_vid_left}
+                                    src={spaceCard.hdurl ? spaceCard.hdurl : spaceCard.url}
+                                    title={spaceCard.title}></iframe>
+                            )
+                        }
+
                     </Grid>
                     <Grid item xs={12} md={4} className={styles.space_card_right}>
                         <h1 className={styles.space_card_title}> {spaceCard.title}</h1>
@@ -180,12 +135,11 @@ const SpaceMedia = ({ spaceCard }: Props) => {
                             </h2>
                         </div>
                         <div className={styles.separator}></div>
-                        {spaceCard.explanation.length > MAX_LENGTH ?
-                            renderExplanation()
-                            : (
-                                <p className={styles.space_card_explanation}>{spaceCard.explanation}
-                                </p>
-                            )}
+
+                        <p className={styles.space_card_explanation}>
+                            {trimTextBaseOnScreenSize(spaceCard.explanation)}
+                        </p>
+
 
                     </Grid>
                     <Grid container className={styles.space_card_utils}>
@@ -215,7 +169,7 @@ const SpaceMedia = ({ spaceCard }: Props) => {
                                             className={styles.input_heart_input}
                                             type="checkbox"
                                             id={`like_${spaceCard.title}`}
-                                            onClick={() => handleLikeBtnClicked('clap')}
+                                            onChange={() => handleLikeBtnClicked('clap')}
                                             checked={likeBtnActive[1] ? true : false}
                                         />
                                         <label

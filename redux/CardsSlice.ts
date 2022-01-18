@@ -11,6 +11,7 @@ interface CardsState {
     loadMore: boolean;
     status: string;
     month: number;
+    isRandom: boolean
 }
 
 const cardsAdapter = createEntityAdapter<SpaceCard>({
@@ -29,11 +30,8 @@ export const fetchCardsAsync = createAsyncThunk<SpaceCard[], void, { state: Root
     async (_, thunkAPI: any) => {
         try {
             const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(1)}`);
-            console.log("fetchCardsAsync: ", response);
             const apiCards = await response.json();
-            // since cards from API do not have id field so we should init it.
-            // let id = thunkAPI.getState().cards.latestId;
-            // apiCards.map((card: SpaceCard) => { card.id = id++; card.liked = false })
+          
             return apiCards;
         }
         catch (error: any) {
@@ -47,12 +45,19 @@ export const fetchMoreCardsAsync = createAsyncThunk<SpaceCard[], void, { state: 
     'cards/fetchMoreCardsAsync',
     async (_, thunkAPI: any) => {
         try {
-            const NoOfMonths = thunkAPI.getState().cards.month;
-            const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(NoOfMonths)}`);
-            console.log("fetchMoreCardsAsync: ", NoOfMonths);
-            const apiCards = await response.json();
+            if (thunkAPI.getState().cards.isRandom) {
+                const NoOfMonths = thunkAPI.getState().cards.month;
+                const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(NoOfMonths)}`);
+                const apiCards = await response.json();
+                return apiCards;
+            }
+            else {
+                const response = await fetch(`${API_URL}&count=15`);
+                const apiCards = await response.json();
+                return apiCards;
+            }
 
-            return apiCards;
+           
         }
         catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.data });
@@ -82,7 +87,8 @@ export const CardsSlice = createSlice({
         cardsLoaded: false,
         loadMore: false,
         status: 'idle',
-        month: 1
+        month: 1,
+        isRandom: false
     }),
     reducers: {
         resetLoadMore: (state) => {
@@ -99,6 +105,7 @@ export const CardsSlice = createSlice({
             state.status = 'pendingFetchCards'
             state.cardsLoaded = true;
             state.month = state.month + 1;
+            state.isRandom = false;
         });
         builder.addCase(fetchCardsAsync.rejected, state => {
             state.status = 'idle'
@@ -113,6 +120,7 @@ export const CardsSlice = createSlice({
             cardsAdapter.setAll(state, action.payload)
             state.status = 'pendingFetchCards'
             state.cardsLoaded = true;
+            state.isRandom = true;
         });
         builder.addCase(fetchCardsRandomAsync.rejected, state => {
             state.status = 'idle'

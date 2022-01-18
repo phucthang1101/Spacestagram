@@ -23,8 +23,8 @@ const Liked: NextPage = () => {
 
     if (loading) return <LoadingScreen />
     return (
-        <Layout>
-            <CoverImage />
+        <Layout title="Spacestagram | Favourite">
+            <CoverImage slogan="Your favourite  <br/> parts about <br/> the Universe"/>
             <MediaList spaceCardsProps={cards} />
         </Layout>
 
