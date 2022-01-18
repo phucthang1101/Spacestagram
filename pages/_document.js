@@ -13,6 +13,7 @@ export default class MyDocument extends Document {
             name='viewport'
             content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
           />
+          <link rel="shortcut icon" href="/static/images/favicon.ico" />
           <link
             rel='stylesheet'
             href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
@@ -93,5 +94,7 @@ MyDocument.getInitialProps = async (ctx) => {
   return {
     ...initialProps,
     emotionStyleTags,
+    styles: [...React.Children.toArray(initialProps.styles), ...emotionStyleTags],
+
   };
 };
