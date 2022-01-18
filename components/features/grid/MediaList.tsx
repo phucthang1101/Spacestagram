@@ -1,31 +1,26 @@
 import React, { useCallback, useEffect } from 'react'
-import { fetchCardsAsync, fetchMoreCardsAsync, resetLoadMore } from '../../../redux/CardsSlice';
+import { fetchMoreCardsAsync, resetLoadMore } from '../../../redux/CardsSlice';
 import { useAppDispatch } from '../../../redux/store';
 import useSpaceCard from '../../hooks/useSpaceCard';
 import { SpaceCard } from '../../models/SpaceCard';
 import SpaceMedia from '../card/SpaceMedia';
 import styles from './MediaList.module.css';
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import Container from '@mui/material/Container';
 import { Fade } from "react-awesome-reveal";
 
-const MediaList = () => {
+interface Props {
+    spaceCardsProps: SpaceCard[];
+}
+const MediaList = ({ spaceCardsProps }: Props) => {
     const dispatch = useAppDispatch();
-    const { spaceCards, cardsLoaded, loadMore } = useSpaceCard();
-
-    //console.log({ products })
-    useEffect(() => {
-        //console.log("media list useeffect: ", cardsLoaded)
-        if (!cardsLoaded) {
-            dispatch(fetchCardsAsync());
-        }
-    }, [cardsLoaded, dispatch]);
+    const { loadMore } = useSpaceCard();
 
 
     const trackScrolling = useCallback(() => {
-        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 100 && !loadMore) {
+        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 300 && !loadMore) {
             // remove event listener to make sure it only runs once
-            console.log('ready to fetch more');
+            //console.log('ready to fetch more');
             dispatch(fetchMoreCardsAsync())
             document.removeEventListener('scroll', trackScrolling)
         }
@@ -42,54 +37,30 @@ const MediaList = () => {
         dispatch(resetLoadMore())
     }, [loadMore])
 
-    // const scrolling_function = () => {
-    //     // if at bottom of the screen
-    //     if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 100) {
-    //         // remove event listener to make sure it only runs once
-    //         console.log('ready to fetch more');
-    //         window.removeEventListener('scroll', scrolling_function)
 
-    //     }
-    //     let { status } = useSpaceCard();
-    //     if (status.includes("fulfilled")) {
-    //         window.addEventListener('scroll', scrolling_function);
-    //     }
-    // }
-
-
-
-
-
-
-
-
-    const renderProducts = () => {
-        //console.log('products in renderProducts: ', products[0])
-        return spaceCards.map((spaceCard: SpaceCard) => (
-            <Fade>
+    const renderSpaceCards = () => {
+        return spaceCardsProps.map((spaceCard: SpaceCard) => (
+            <Fade key={spaceCard.title}>
                 <Grid
                     item
                     xs={12}
                     sm={12}
-                   
                     style={{ display: 'flex' }}
+                    className={styles.space_card_wrapper}
                 >
                     <SpaceMedia spaceCard={spaceCard} />
                 </Grid>
-                </Fade>
+            </Fade>
         ))
     }
 
-
+ 
     // function to allow for pagination
-
-
-
     return (
         <>
             <Container maxWidth="lg" className={styles.media_list_container}>
                 <Grid container spacing={4} className={styles.media_list_grid_container}>
-                    {renderProducts()}
+                    {renderSpaceCards()}
                 </Grid>
             </Container>
         </>

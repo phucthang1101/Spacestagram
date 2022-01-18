@@ -64,12 +64,10 @@ span.s2 {
 
 /* Right side of the card */
 .space_card_right {
-  margin-left: 590px;
-  margin-right: 20px;
+  margin: 0 auto;
 }
 
 .space_card_title {
-  padding-top: 15px;
   font-size: 1.3rem;
   color: #d39f69;
 }
@@ -128,21 +126,29 @@ span.s2 {
 .space_card_year {
   position: absolute;
   right: 30px;
-  bottom: -120px;
-  font-size: 6rem;
+  bottom: 0px;
+  margin: 0;
+  font-size: 7rem;
   color: #c3c3c3;
 }
 
 /* Those futur buttons */
 .space_card_ul {
   display: flex;
+  padding: 0;
+  margin-top: 0;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .space_card_list_item {
-  display: inline;
   list-style: none;
   padding-right: 20px;
   color: #7b7b7b;
+  height: 80px;
+  width: 80px;
+  position: relative;
+  display: flex;
 }
 
 /* Floating action button */
@@ -165,8 +171,8 @@ span.s2 {
 
 .share_btn {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: 100%;
 }
 
 .share_btn_input {
@@ -186,7 +192,7 @@ span.s2 {
 }
 .share_btn_input:checked ~ .share_btn_options {
   width: auto;
-  height: auto;
+  height: fit-content;
   white-space: nowrap;
   border-radius: 0.3125em;
   background-color: #f2f2f2;
@@ -201,17 +207,20 @@ span.s2 {
 .share_btn_toggler,
 .share_btn_options {
   position: absolute;
-  left: 0;
+  bottom: 0;
   width: inherit;
   height: inherit;
   border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  top: -10px;
+  left: -10px;
 }
-.share_btn_input:checked ~ .share_btn_toggler{
-    position: absolute;
-    left: 0;
-    width: 40px;
-    height: 50px;
-    border-radius: 50%;
+.share_btn_input:checked ~ .share_btn_toggler {
+  position: absolute;
+  left: 0;
+  width: 40px;
+  border-radius: 50%;
 }
 .share_btn_toggler {
   cursor: pointer;
@@ -223,7 +232,8 @@ span.s2 {
 
 .share_btn_icon {
   position: relative;
-  left: -0.3125em;
+  left: -10px;
+  top: -10px;
   width: 0.5em;
   height: 0.5em;
   border-radius: 50%;
@@ -261,14 +271,8 @@ span.s2 {
   box-sizing: border-box;
   overflow: hidden;
   transition: 0.2s;
+  height: fit-content;
 }
-/* 
-.share_btn_options::before {
-  content: attr(data-title);
-  display: block;
-  margin-bottom: 1.25em;
-  font-weight: 700;
-} */
 .share_btn_options li {
   font-size: 0.875em;
   color: #464646;
@@ -286,55 +290,277 @@ span.s2 {
   transform: translateY(0.625em);
   transition: 0s;
 }
-.view_modal_btn{
-    width: 80px;
-    height:80px;
-}
-.view_modal_btn i{
-    color: #ff8100;
-}
-
-
-.like_btn,
-.clap_btn {
-  display: inline-block;
-  cursor: pointer;
+.view_modal_btn {
   width: 80px;
   height: 80px;
 }
-
-.like_btn {
-  background: url('https://i.ibb.co/vw78mf3/heart.png') no-repeat 0% 50%;
-  background-size: 2900%;
+.view_modal_btn i {
+  color: #ff8100;
+  position: absolute;
+  top: 5px;
 }
 
-.clap_btn {
-  background: url('https://i.ibb.co/GVsbrFF/claps.png') no-repeat 0% 50%;
-  background-size: 900%;
+/*new like btn*/
+
+.like_btn_new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.like_btn_new_animated {
+  -webkit-animation: pop 0.9s both;
+  animation: pop 0.9s both;
+}
+.like_btn_new svg {
+  opacity: 1;
+  width: 40px;
+  height: 40px;
+}
+.like_btn_new svg path {
+  fill: #fff;
+  transition: fill 0.4s ease-out;
+}
+.like_btn_new_active svg path {
+  fill: #2196f3;
 }
 
-.like_btn_active,
-.clap_btn_active {
-  animation-name: animate;
-  animation-duration: 0.8s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-.like_btn_active {
-  animation-timing-function: steps(28);
-}
-
-.clap_btn_active {
-  animation-timing-function: steps(8);
-}
-@keyframes animate {
+@-webkit-keyframes pop {
   0% {
-    background-position: left;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
   }
   50% {
-    background-position: right;
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+    transform: scale3d(1.05, 0.95, 1);
   }
   100% {
-    background-position: right;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes pop {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+/*heart new btn*/
+.input_heart_input[type='checkbox'] {
+  display: none;
+}
+.input_heart_label {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.input_heart_label svg {
+  width: 40px;
+  position: absolute;
+}
+.input_heart_input[type='checkbox'] + .input_heart_label svg {
+  fill: #fae2e2;
+  transition: all 0.3s;
+}
+.input_heart_input[type='checkbox']:checked + .input_heart_label svg {
+  fill: #ff4d4d;
+  animation: like 0.8s ease-out;
+  transition: all 0.3s;
+}
+@keyframes like {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(0.5, 0.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+.input_heart_input[type='checkbox']:checked + .input_heart_label::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fa9797;
+  border-radius: 50%;
+  -webkit-animation: circle 0.8s ease-out;
+  -moz-animation: circle 0.8s ease-out;
+  animation: circle 0.8s ease-out;
+  opacity: 0;
+  left: 0;
+  z-index: -100;
+}
+
+@keyframes circle {
+  0% {
+    transform: scale(0.2, 0.2);
+  }
+  50% {
+    transform: scale(0.5, 0.5);
+  }
+  80% {
+    transform: scale(1, 1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.3, 1.3);
+    opacity: 0;
+  }
+}
+
+/* For mobile phones: */
+@media only screen and (max-width: 768px) {
+  .fond {
+    height: 100vh;
+    margin-top: 7rem;
+  }
+
+  /* Image on the left side */
+  .space_card_thumbnail {
+    position: relative;
+    left: 0;
+    top: -5%;
+    height: 40%;
+    width: 80%;
+    -webkit-box-shadow: 5px -1px 25px 0px rgb(255 255 255 / 66%);
+    box-shadow: 5px -1px 25px 0px rgb(255 255 255 / 66%);
+    overflow: hidden;
+    margin: auto;
+    flex-basis: unset;
+  }
+
+  /* The card */
+  .space_card {
+    position: relative;
+    height: 100%;
+    width: 100vw;
+    margin: 0;
+    /* background-color: #fff; */
+    -webkit-box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
+    -moz-box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
+    box-shadow: 10px 10px 93px 0px rgb(255 255 255 / 36%);
+  }
+
+  /* Right side of the card */
+  .space_card_right {
+    margin: 0 auto;
+    margin-top: -10%;
+    height: 40%;
+    position: relative;
+    display: block;
+  }
+
+  .space_card_title {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  .space_card_author {
+    margin: auto;
+  }
+  .space_card_explanation {
+    margin: 0;
+    padding: 10px 13px;
+  }
+  .space_card_utils {
+    position: relative;
+    height: 20%;
+    margin-top: 10%;
+  }
+  /* DATE of release*/
+  .space_card_date_month {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 40%;
+  }
+  .space_card_date {
+    margin: 0;
+    display: inline-block;
+    font-size: 2rem;
+    color: #c3c3c3;
+    position: unset;
+    left: 0;
+    bottom: 0;
+  }
+
+  .space_card_month {
+    margin: 0;
+    display: inline-block;
+    font-size: 1.5rem;
+    color: #c3c3c3;
+    position: unset;
+    left: 0;
+    bottom: 0;
+  }
+  .space_card_year_wrapper {
+    margin: 0;
+    height: 40%;
+  }
+  .space_card_year {
+    margin: 0;
+    display: inline-block;
+    font-size: 2rem;
+    color: #c3c3c3;
+    position: unset;
+    left: 0;
+    bottom: 0;
+  }
+
+  .space_card_list_item {
+    padding-right: 0;
+  }
+
+  /* Those futur buttons */
+  .space_card_ul {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .share_btn_input:checked ~ .share_btn_options {
+    white-space: unset;
   }
 }

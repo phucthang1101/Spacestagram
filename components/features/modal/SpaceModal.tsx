@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { SpaceCard } from '../../models/SpaceCard';
+import styles from './SpaceModal.module.css';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -16,30 +18,33 @@ const style = {
   p: 4,
 };
 
-interface Props{
-    open:boolean;
-    handleOpen: () => void;
-    handleClose: () => void;
+interface Props {
+  open: boolean;
+  handleOpen: () => void;
+  handleClose: () => void;
+  spaceCard: SpaceCard;
 }
-export default function SpaceModal({open, handleOpen, handleClose}:Props) {
-    
-
+export default function SpaceModal({ open, handleOpen, handleClose, spaceCard }: Props) {
   return (
     <div>
-     
+
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        className={styles.mui_modal}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+        <Box className={styles.space_modal_container}>
+          <div className={styles.space_modal_img_wrapper}>
+            <img className={styles.space_modal_img} src={spaceCard.hdurl ? spaceCard.hdurl : spaceCard.url} />
+          </div>
+          <h1 className={styles.space_modal_title}>
+            {spaceCard.title}
+          </h1>
+          <p className={styles.space_modal_explanation}>
+            {spaceCard.explanation}
+          </p>
         </Box>
       </Modal>
     </div>

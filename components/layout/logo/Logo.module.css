@@ -1,0 +1,43 @@
+.logo_rocket {
+  animation: rocket_bounce 1s infinite;
+}
+
+@keyframes rocket_bounce {
+  0% {
+    transform: translateZ(0);
+  }
+  50% {
+    transform: translate3d(0, -3px, 0);
+  }
+  100% {
+    transform: translateZ(0);
+  }
+}
+.logo_container {
+  /* color: rgba(37, 99, 235, 1); */
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  align-items: center;
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+@media (min-width: 640px) {
+  .logo_container {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-left: 2rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .logo_container {
+    position: absolute;
+    z-index: 2000;
+    left: 1rem;
+    top: 2rem;
+  }
+  .navbar_sticky.logo_container {
+    top: 1rem;
+  }
+}

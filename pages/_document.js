@@ -1,6 +1,9 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import React from 'react';
+import createCache from '@emotion/cache';
+import createEmotionServer from '@emotion/server/create-instance';
 
-class MyDocument extends Document {
+export default class MyDocument extends Document {
   render() {
     return (
       <Html lang='en'>
@@ -14,107 +17,81 @@ class MyDocument extends Document {
             rel='stylesheet'
             href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
           />
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-
+          <link
+            rel='stylesheet'
+            href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
+          ></link>
+          {this.props.emotionStyleTags}
         </Head>
         <body>
           <Main />
           <NextScript />
-        
         </body>
       </Html>
     );
   }
 }
 
-export default MyDocument;
-/*
-  <script src='//cdn.quilljs.com/1.3.6/quill.js'></script>
-          <script src='https://cdn.jsdelivr.net/npm/quill-emoji@0.1.7/dist/quill-emoji.min.js'></script>
-          <script src='//cdn.quilljs.com/1.3.6/quill.min.js'></script>
-          {/* <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script> */
-/* <script src='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js'></script> */
-/* <script src='https://alexandrebuffet.fr/codepen/slider/slick-animation.min.js'></script> */
+// prepend: true moves MUI styles to the top of the <head> so they're loaded first.
+// It allows developers to easily override MUI styles with other styling solutions, like CSS modules.
 
-/*
- <link
-            href='https://fonts.googleapis.com/css?family=Playball&amp;display=swap'
-            rel='stylesheet'
-          ></link>
-          <link
-            href='https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&amp;display=swap'
-            rel='stylesheet'
-          ></link>
+// `getInitialProps` belongs to `_document` (instead of `_app`),
+// it's compatible with static-site generation (SSG).
+MyDocument.getInitialProps = async (ctx) => {
+  // Resolution order
+  //
+  // On the server:
+  // 1. app.getInitialProps
+  // 2. page.getInitialProps
+  // 3. document.getInitialProps
+  // 4. app.render
+  // 5. page.render
+  // 6. document.render
+  //
+  // On the server with error:
+  // 1. document.getInitialProps
+  // 2. app.render
+  // 3. page.render
+  // 4. document.render
+  //
+  // On the client
+  // 1. app.getInitialProps
+  // 2. page.getInitialProps
+  // 3. app.render
+  // 4. page.render
+  function createEmotionCache() {
+    return createCache({ key: 'css', prepend: true });
+  }
+  const originalRenderPage = ctx.renderPage;
 
-          <link
-            rel='stylesheet'
-            href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
-            integrity='sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z'
-            crossOrigin='anonymous'
-          />
+  // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
+  // However, be aware that it can have global side effects.
+  const cache = createEmotionCache();
+  const { extractCriticalToChunks } = createEmotionServer(cache);
 
-          <link
-            rel='stylesheet'
-            href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'
-          ></link>
-          <link
-            rel='stylesheet'
-            href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'
-          ></link>
+  ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceApp: (App) =>
+        function EnhanceApp(props) {
+          return <App emotionCache={cache} {...props} />;
+        },
+    });
 
-          <link
-            rel='stylesheet'
-            type='text/css'
-            href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css'
-          />
-          <link
-            rel='stylesheet'
-            type='text/css'
-            href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'
-          />
-          <link
-            rel='stylesheet'
-            href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
-          />
-           <link
-            rel='stylesheet'
-            href='https://unpkg.com/simplebar@latest/dist/simplebar.css'
-          /> 
-          <link rel='stylesheet' href='/static/css/styles.css' />
-          <link rel='stylesheet' href='/static/css/fonts-icon.css' />
-          <link rel='icon' type='image/png' href='/static/images/favicon.png' />
-          <link
-            rel='stylesheet'
-            href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'
-          />
+  const initialProps = await Document.getInitialProps(ctx);
+  // This is important. It prevents emotion to render invalid HTML.
+  // See https://github.com/mui-org/material-ui/issues/26561#issuecomment-855286153
+  const emotionStyles = extractCriticalToChunks(initialProps.html);
+  const emotionStyleTags = emotionStyles.styles.map((style) => (
+    <style
+      data-emotion={`${style.key} ${style.ids.join(' ')}`}
+      key={style.key}
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: style.css }}
+    />
+  ));
 
-          <link
-            rel='stylesheet'
-            id='handyman-fonts6-css'
-            href='https://fonts.googleapis.com/css?family=Playfair+Display%3A400%2C400i%2C700%2C700i%2C900%2C900i&amp;ver=4.9.15'
-            media='all'
-          ></link>
-          <script src='https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js'></script>
-
-          <link
-            rel='stylesheet'
-            href='https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css'
-          />
-
-          <link
-            rel='stylesheet'
-            href='//cdn.quilljs.com/1.3.6/quill.snow.css'
-          />
-          <link
-            href='//cdn.quilljs.com/1.3.6/quill.bubble.css'
-            rel='stylesheet'
-          />
-           <link
-            rel='stylesheet'
-            href='https://cdn.jsdelivr.net/npm/quill-emoji@0.1.7/dist/quill-emoji.css'
-          />
-           <link
-            rel='stylesheet'
-            href='https://cdn.jsdelivr.net/npm/react-toastify@7.0.3/dist/ReactToastify.css'
-          />
-*/
+  return {
+    ...initialProps,
+    emotionStyleTags,
+  };
+};

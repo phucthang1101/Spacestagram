@@ -42,9 +42,9 @@
 .cover_img_section {
   margin: 0;
   height: 100vh;
-  width: 100vw;
+  width: 98vw;
   position: relative;
-  background: url(https://www.kcrw.com/news/shows/press-play-with-madeleine-brand/politics-immigration-alzheimers-film-travel/space-tourism/@@images/rectangular_image/page-header?v=1623277449.28);
+  background: url(/static/images/earth_outer_space.jpg);
   background-size: initial;
   background-repeat: no-repeat;
   background-position: center;
@@ -61,10 +61,6 @@
 .astronaut_img {
   animation: ast_img 7s linear infinite alternate;
 }
-/* }
-.astronaut_img {
-  animation: ast_img 7s linear infinite alternate, spin 4s linear infinite;
-} */
 @keyframes spin {
   100% {
     -webkit-transform: rotate(360deg);
@@ -156,5 +152,17 @@
 @media only screen and (min-width: 1220px) {
   .cover_img_earth {
     width: 42%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .cover_img_text {
+    position: relative;
+    top: 0;
+    left: 0;
+    color: white;
+    transform: none;
+  }
+  .cover_img_section{
+    width:105vw;
   }
 }

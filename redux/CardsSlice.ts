@@ -23,38 +23,6 @@ const getPreviousMonthDate = (NoOfMonths: number) => {
     return new Date(priorDate).toISOString().split('T')[0];
 };
 
-// export const fetchCardsAsync = createAsyncThunk<SpaceCard[], void, { state: RootState }>(
-//     'cards/fetchCardsAsync',
-//     async (_, thunkAPI: any) => {
-//         try {
-//             const NoOfMonths = thunkAPI.getState().cards.month;
-//             if (NoOfMonths === 1) {
-//                 const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(1)}`);
-//                 console.log(response);
-//                 const apiCards = await response.json();
-//                 // since cards from API do not have id field so we should init it.
-//                 let id = thunkAPI.getState().cards.latestId;
-//                 apiCards.map((card: SpaceCard) => { card.id = id++; card.liked = false })
-//                 return apiCards;
-//             }
-//             else {
-//                 const response = await fetch(`${API_URL}&start_date=${getPreviousMonthDate(NoOfMonths)}`);
-//                 console.log(response);
-//                 const apiCards = await response.json();
-//                 // since cards from API do not have id field so we should init it.
-
-//                 let id = thunkAPI.getState().cards.latestId;
-//                 apiCards.map((card: SpaceCard) => { card.id = id++; card.liked = false })
-//                 return apiCards;
-//             }
-
-//         }
-//         catch (error: any) {
-//             return thunkAPI.rejectWithValue({ error: error.data });
-//         }
-//     },
-// )
-
 
 export const fetchCardsAsync = createAsyncThunk<SpaceCard[], void, { state: RootState }>(
     'cards/fetchCardsAsync',
@@ -91,6 +59,23 @@ export const fetchMoreCardsAsync = createAsyncThunk<SpaceCard[], void, { state: 
         }
     },
 )
+
+
+export const fetchCardsRandomAsync = createAsyncThunk<SpaceCard[], void, { state: RootState }>(
+    'cards/fetchCardsRandomAsync',
+    async (_, thunkAPI: any) => {
+        try {
+            const response = await fetch(`${API_URL}&count=15`);
+            const apiCards = await response.json();
+            return apiCards;
+        }
+        catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.data });
+        }
+    },
+)
+
+
 export const CardsSlice = createSlice({
     name: 'cards',
     initialState: cardsAdapter.getInitialState<CardsState>({
@@ -115,10 +100,24 @@ export const CardsSlice = createSlice({
             state.cardsLoaded = true;
             state.month = state.month + 1;
         });
-
         builder.addCase(fetchCardsAsync.rejected, state => {
             state.status = 'idle'
         });
+
+
+        builder.addCase(fetchCardsRandomAsync.pending, state => {
+            state.status = 'pendingFetchCards'
+        });
+        builder.addCase(fetchCardsRandomAsync.fulfilled, (state, action) => {
+            console.log('fetchCardsRandomAsync.fulfilled: ', action.payload)
+            cardsAdapter.setAll(state, action.payload)
+            state.status = 'pendingFetchCards'
+            state.cardsLoaded = true;
+        });
+        builder.addCase(fetchCardsRandomAsync.rejected, state => {
+            state.status = 'idle'
+        });
+
 
         builder.addCase(fetchMoreCardsAsync.pending, state => {
             state.status = 'pendingFetchMoreCards'
