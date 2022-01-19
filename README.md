@@ -1,34 +1,101 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Spacestagram | [Live Demo](https://spacestagram-hazel.vercel.app/) | 🚀
 
-## Getting Started
+<div align="text-align:center">
+  <img src="./public/static/images/readme-welcome.PNG" width="1024px">
+</div>
+Presenting **Spacestagram**, *Enjoy the Universe at your fingertips*.
 
-First, run the development server:
+- The live version of this app can be found [here](https://spacestagram-hazel.vercel.app/)
+- [Challenge specification](https://docs.google.com/document/d/1QlC6htA5SXEl3YruAOkJWj2-0W3w-n0UOzGuJ1EcktQ/edit)
+
+## 🔍 Preview
+
+### 📱 Mobile
+
+![Mobile Preview](public/static/images/readme-mobile.PNG)
+
+### 💻 Desktop
+
+![Desktop Preview](public/static/images/readme-desktop.PNG)
+
+## 📚 Table of Contents
+
+- [🔍 Preview](#-preview)
+  - [📱 Mobile](#-mobile)
+  - [💻 Desktop](#-desktop)
+- [📚 Table of Contents](#-table-of-contents)
+- [👏 Features](#-features)
+- [⌨ Running Locally](#-running-locally)
+  - [Setting up NASA credentials](#setting-up-nasa-credentials)
+  - [Build for Production](#build-for-production)
+- [👩‍💻 Technologies and Libraries Used](#-technologies-and-libraries-used)
+- [📋 Description](#-description)
+- [❓ Questions](#-questions)
+- [🌎 Special Thanks](#special-thanks) 
+
+## 👏 Features
+
+  * 📅 Explore the space from a specified date
+  * 🔀 Explore the space at random moments
+  * ❤️ Explore your own favourite cards
+  * 🔃 Loading state when waiting for NASA's API to return data
+  * 👍 Persits likes and loves of cards
+  * 👀 Click on eye icon to view details
+  * ♾ Infinite scroll
+  * 🔥 Special Animation all over the place
+  * 📁 Copy Media URL to Clipboard
+
+## ⌨ Running Locally
+
+Firstly, you need clone this repository and install dependencies by using the command line:
 
 ```bash
-npm run dev
-# or
-yarn dev
+git clone https://github.com/phucthang1101/Spacestagram app
+cd app
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Setting up NASA credentials
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Secondly, to access this website, you have to create an API key in order to use NASA's API call. Follow the steps below to create one:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Visit https://api.nasa.gov
+2. Enter basic details which are asked (like name, email) and the API key will be generated
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Run Development Environment
+Lastly, You will need a **"next.config.js"** file in the root directory to run successfully. An example for the next.config.js file has been written in exampleConfig.js. Modify the NASA API key value as you need and required before starting. 
 
-## Learn More
+After all that, let's give it a try by typing:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👩‍💻 Technologies and Libraries Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- ReactJs
+- NextJs
+- TypeScript
+- Material UI
+- Redux
+- [NASA's APOD API](https://github.com/nasa/apod-api)
 
-## Deploy on Vercel
+Bootstrapped with my [Next.js template](https://github.com/vinhvn/next-typescript-twin-styled-eslint-starter).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📋 Description
+This project was built by me within 1 week as I found out about the technical challenge for the Shopify Frontend Developer Internship pretty late. Project goals included using technologies learned up until this point and familiarizing myself with ways to implement new features.
+I built Spacestagram using NextJs and Typescript to allow for rapid development, easy implementation of the various dynamic features and make sure to increase SEO performance.
+At all points of development the application was tested on different devices to allow for a seamless experience. Generic components from Material UI were used for responsive while specific interface elements such as cards and all animations were coded from scratch.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## ❓ Questions
+
+If you have any problems or questions, you can email me at elisonliu97@gmail.com or contact me on my Github. Github Page: elisonliu97
+
+
+## 🌎 Special Thanks
+
+1. [Shopify](https://www.shopify.ca/) for the wonderful challange that allow my creativity running freely on their interesting idea,
+2. [NASA](https://www.nasa.gov/) for their fascinating API,
+3. [FontAwesome](https://fontawesome.com/) for the other svg icons
+4. [Lighthouse](https://developers.google.com/web/tools/lighthouse/) for their accessibility auditing
