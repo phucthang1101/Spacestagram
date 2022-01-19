@@ -3,10 +3,9 @@
 <div align="text-align:center">
   <img src="./public/static/images/readme-welcome.PNG" width="1024px">
 </div>
-Presenting **Spacestagram**, *Enjoy the Universe at your fingertips*.
 
 - The live version of this app can be found [here](https://spacestagram-hazel.vercel.app/)
-- [Challenge specification](https://docs.google.com/document/d/1QlC6htA5SXEl3YruAOkJWj2-0W3w-n0UOzGuJ1EcktQ/edit)
+- [Challenge Description](https://docs.google.com/document/d/13zXpyrC2yGxoLXKktxw2VJG2Jw8SdUfliLM-bYQLjqE/edit#heading=h.6kafoyko4s5j)
 
 ## 🔍 Preview
 
@@ -78,7 +77,7 @@ npm run dev
 - TypeScript
 - Material UI
 - Redux
-- [NASA's APOD API](https://github.com/nasa/apod-api)
+- [NASA's APOD API](https://api.nasa.gov#apod)
 
 
 ## 📋 Description
