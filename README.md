@@ -80,7 +80,6 @@ npm run dev
 - Redux
 - [NASA's APOD API](https://github.com/nasa/apod-api)
 
-Bootstrapped with my [Next.js template](https://github.com/vinhvn/next-typescript-twin-styled-eslint-starter).
 
 ## 📋 Description
 This project was built by me within 1 week as I found out about the technical challenge for the Shopify Frontend Developer Internship pretty late. Project goals included using technologies learned up until this point and familiarizing myself with ways to implement new features.
@@ -90,7 +89,7 @@ At all points of development the application was tested on different devices to 
 
 ## ❓ Questions
 
-If you have any problems or questions, you can email me at elisonliu97@gmail.com or contact me on my Github. Github Page: elisonliu97
+If you have any problems or questions, you can email me at matttran1101@gmail.com or contact me on my website: https://matthewtrn.me/
 
 
 ## 🌎 Special Thanks
